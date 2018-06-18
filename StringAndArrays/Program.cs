@@ -1,6 +1,8 @@
-﻿namespace StringAndArrays
+﻿using System.Text;
+
+namespace StringAndArrays
 {
-    class MainClass
+    class Program
     {
         public static void Main(string[] args)
         {
@@ -62,10 +64,10 @@
             //}
 
             // 1.9
-            var input = new int[] { 123, 12345, 1234567, 1234567891 };
+            var input = new int[] { 2, 12, 52, 123, 12345, 1234567, 1234567891 };
             foreach (var item in input)
             {
-                System.Diagnostics.Debug.WriteLine($"Input: {item.ToString()}\nResult: {NumberToWords(item)}\n");
+                System.Diagnostics.Debug.WriteLine($"> {item.ToString()} : {NumberToWords(item)}\n");
             }
         }
 
@@ -315,7 +317,45 @@
         #region 1.9
         static string NumberToWords(int num)
         {
-            return num.ToString();
+            if (num == 0)
+                return "Zero";
+
+            return GetEnglishWord(num);
+        }
+
+        static string GetEnglishWord(int num)
+        {
+            var TEENS = new string[20] { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+            var TENS = new string[10] { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+            
+            var sb = new StringBuilder();
+
+            if (num < 20)
+            {
+                sb.Append($"{TEENS[num]}");
+            }
+            else if (num < 100)
+            {
+                sb.Append($"{TENS[num / 10]} {TEENS[num % 10]}");
+            }
+            else if (num < 1000)
+            {
+                sb.Append($"{GetEnglishWord(num/100)} Hundred {GetEnglishWord(num % 100)}");
+            }
+            else if (num < 1000000)
+            {
+                sb.Append($"{GetEnglishWord(num / 1000)} Thousand {GetEnglishWord(num % 1000)}");
+            }
+            else if (num < 1000000000)
+            {
+                sb.Append($"{GetEnglishWord(num / 1000000)} Million {GetEnglishWord(num % 1000000)}");
+            }
+            else
+            {
+                sb.Append($"{GetEnglishWord(num / 1000000000)} Billion {GetEnglishWord(num % 1000000000)}");
+            }
+
+            return sb.ToString().Trim();
         }
         #endregion
     }
