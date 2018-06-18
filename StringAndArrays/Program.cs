@@ -57,17 +57,34 @@ namespace StringAndArrays
             //System.Diagnostics.Debug.WriteLine($"Result: {LongestPalindrome(input17)}");
 
             // 1.8
-            //var input = new int[] { 1, 2, 3, 4 };
-            //foreach (var item in ProductExceptSelf(input))
+            //var input18 = new int[] { 1, 2, 3, 4 };
+            //foreach (var item in ProductExceptSelf(input18))
             //{
             //    System.Diagnostics.Debug.Write($"{item} ");
             //}
 
             // 1.9
-            var input = new int[] { 2, 12, 52, 123, 12345, 1234567, 1234567891 };
-            foreach (var item in input)
+            //var input19 = new int[] { 2, 12, 52, 123, 12345, 1234567, 1234567891 };
+            //foreach (var item in input19)
+            //{
+            //    System.Diagnostics.Debug.WriteLine($"> {item.ToString()} : {NumberToWords(item)}\n");
+            //}
+
+            // 1.10
+            var input110 = new[] {
+                new int[] { 2, 12, 3, 43, 2, 9 },
+                new int[] { 1, 3, 4, 2, 2 },
+                new int[] { 3, 1, 3, 4, 2 }
+            };
+            foreach (var item in input110)
             {
-                System.Diagnostics.Debug.WriteLine($"> {item.ToString()} : {NumberToWords(item)}\n");
+                System.Diagnostics.Debug.Write("[");
+                for (int i = 0; i < item.Length; i++)
+                {
+                    System.Diagnostics.Debug.Write($"{item[i].ToString()},");
+                }
+                System.Diagnostics.Debug.Write("] ");
+                System.Diagnostics.Debug.Write($"Found: {FindDuplicate(item)}\n\r");
             }
         }
 
@@ -356,6 +373,21 @@ namespace StringAndArrays
             }
 
             return sb.ToString().Trim();
+        }
+        #endregion
+
+        #region 1.10
+        static int FindDuplicate(int[] nums)
+        {
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 1; j < nums.Length; j++)
+                {
+                    if (i != j && nums[i] == nums[j])
+                        return nums[i];
+                }
+            }
+            return -1;
         }
         #endregion
     }
