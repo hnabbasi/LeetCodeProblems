@@ -28,18 +28,13 @@ namespace StringAndArrays
             //    System.Diagnostics.Debug.Write($"{item} ");
             //}
 
-            //var input15 = new int[] { 1, -1, 5, -2, 3 };
-            //var output15 = MaxSubArrayLen(input15, 3);
-            //System.Diagnostics.Debug.WriteLine($"Result: {output15}");
+            // 1.5
+            System.Diagnostics.Debug.WriteLine($"Result (4): {MaxSubArrayLen(new int[] { 1, -1, 5, -2, 3 }, /* Sum = */ 3)}");
+            System.Diagnostics.Debug.WriteLine($"Result (1): {MaxSubArrayLen(new int[] { -1 }, /* Sum = */ -1)}");
+            System.Diagnostics.Debug.WriteLine($"Result (2): {MaxSubArrayLen(new int[] { -2, -1, 2, 1 }, /* Sum = */ 1)}");
+            System.Diagnostics.Debug.WriteLine($"Result (5): {MaxSubArrayLen(new int[] { -1, 5, 6, 1, 0, 0, -8, 8, -1, 3 }, /* Sum = */ -1)}");
 
-            //var input15b = new int[] { -1 };
-            //var output15b = MaxSubArrayLen(input15b, -1);
-            //System.Diagnostics.Debug.WriteLine($"Result: {output15b}");
-
-            //var input15c = new int[] { -2, -1, 2, 1 };
-            //var output15c = MaxSubArrayLen(input15c, 1);
-            //System.Diagnostics.Debug.WriteLine($"Result: {output15c}");
-
+            // 1.6
             //var output16 = CompareVersion("0.1", "1.1");
             //System.Diagnostics.Debug.WriteLine($"Result: {output16}");
 
@@ -71,21 +66,21 @@ namespace StringAndArrays
             //}
 
             // 1.10
-            var input110 = new[] {
-                new int[] { 2, 12, 3, 43, 2, 9 },
-                new int[] { 1, 3, 4, 2, 2 },
-                new int[] { 3, 1, 3, 4, 2 }
-            };
-            foreach (var item in input110)
-            {
-                System.Diagnostics.Debug.Write("[");
-                for (int i = 0; i < item.Length; i++)
-                {
-                    System.Diagnostics.Debug.Write($"{item[i].ToString()},");
-                }
-                System.Diagnostics.Debug.Write("] ");
-                System.Diagnostics.Debug.Write($"Found: {FindDuplicate(item)}\n\r");
-            }
+            //var input110 = new[] {
+            //    new int[] { 2, 12, 3, 43, 2, 9 },
+            //    new int[] { 1, 3, 4, 2, 2 },
+            //    new int[] { 3, 1, 3, 4, 2 }
+            //};
+            //foreach (var item in input110)
+            //{
+            //    System.Diagnostics.Debug.Write("[");
+            //    for (int i = 0; i < item.Length; i++)
+            //    {
+            //        System.Diagnostics.Debug.Write($"{item[i].ToString()},");
+            //    }
+            //    System.Diagnostics.Debug.Write("] ");
+            //    System.Diagnostics.Debug.Write($"Found: {FindDuplicate(item)}\n\r");
+            //}
         }
 
         #region 1.1
@@ -163,53 +158,28 @@ namespace StringAndArrays
         #endregion
 
         #region 1.5
-        static public int MaxSubArrayLen(int[] nums, int k)
+        static int MaxSubArrayLen(int[] nums, int k)
         {
-            var count = 0;
-            var sum = 0;
-
-            for (int i = 0; i <= nums.Length - 1; i++)
-            {
-                sum = nums[i];
-                //count = 0;
-
-                for (int j = i + 1; j < nums.Length; j++)
-                {
-                    sum += nums[j];
-                    //count++;
-
-                    if (sum == k)
-                    {
-                        count = i + 1;
-                    }
-                }
-            }
-            return count;
-        }
-
-        static public int MaxSubArrayLen2(int[] nums, int k)
-        {
-            var max = 0;
-            var sum = 0;
-
+            int max = 0, sum = 0;
             var dict = new System.Collections.Generic.Dictionary<int, int>();
 
-            for (int i = 0; i < nums.Length; i++)
+            for (int i = 0; i <= nums.Length -1; i++)
             {
                 sum += nums[i];
 
                 if (sum == k)
                     max = System.Math.Max(max, i + 1);
-
-                int diff = sum - k;
-
-                if (!dict.ContainsKey(diff))
-                    dict.Add(diff, i);
                 else
-                    max = System.Math.Max(max, i - dict[diff]);
+                {
+                    int diff = sum - k;
+                    var val = 0;
+                    if (dict.TryGetValue(diff, out val))
+                        max = System.Math.Max(max, i - val);
+                }
 
+                if (!dict.ContainsKey(sum))
+                    dict[sum] = i;
             }
-
             return max;
         }
         #endregion
