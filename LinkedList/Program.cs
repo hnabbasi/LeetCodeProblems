@@ -45,10 +45,11 @@
             if (_head == null)
             {
                 _head = newNode;
+            } else
+            {
+                newNode.link = _head;
+                _head = newNode;
             }
-
-            newNode.link = _head;
-            _head = newNode;
         }
 
         static void InsertEnd(int data)
@@ -60,16 +61,18 @@
             {
                 InsertBegin(data);
             }
-
-            current = _head;
-
-            while (current.link != null)
+            else
             {
-                current = current.link;
-            }
+                current = _head;
 
-            var newNode = new SingleNode(data);
-            current.link = newNode;
+                while (current.link != null)
+                {
+                    current = current.link;
+                }
+
+                var newNode = new SingleNode(data);
+                current.link = newNode;
+            }
         }
 
         static void InsertAt(int data, int position)
@@ -82,21 +85,23 @@
             {
                 InsertBegin(data);
             }
-
-            current = _head;
-
-            while (current.link != null)
+            else
             {
-                if (pos == position - 1)
-                    break;
+                current = _head;
 
-                current = current.link;
-                pos++;
+                while (current.link != null)
+                {
+                    if (pos == position - 1)
+                        break;
+
+                    current = current.link;
+                    pos++;
+                }
+
+                var newNode = new SingleNode(data);
+                newNode.link = current.link;
+                current.link = newNode;
             }
-
-            var newNode = new SingleNode(data);
-            newNode.link = current.link;
-            current.link = newNode;
         }
 
         static void PrintList()
