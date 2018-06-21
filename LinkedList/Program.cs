@@ -9,13 +9,15 @@
         static void Main(string[] args)
         {
             System.Diagnostics.Debug.WriteLine("Linked list");
-            Initialize(new int[] { 2, 3, 5, 6, 7, 8 });
+            Initialize(new int[] { 2, 3, 5, 6, 6, 7, 8 });
             PrintList();
             InsertBegin(1);
             PrintList();
             InsertEnd(9);
             PrintList();
             InsertAt(4, 3);
+            PrintList();
+            Delete(6);
             PrintList();
         }
 
@@ -101,6 +103,26 @@
                 var newNode = new SingleNode(data);
                 newNode.link = current.link;
                 current.link = newNode;
+            }
+        }
+
+        static void Delete(int data)
+        {
+            System.Diagnostics.Debug.WriteLine($"\nDelete {data}");
+
+            if (_head == null)
+                return;
+
+            SingleNode current;
+            current = _head;
+
+            while (current.link != null)
+            {
+                if (data == int.Parse(current.link.data.ToString())) {
+                    current.link = current.link.link;
+                    return;
+                }
+                current = current.link;
             }
         }
 
