@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringAndArrays", "StringAn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedList", "LinkedList\LinkedList.csproj", "{C72E9134-516C-4E8E-8A0F-C263336255FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchAndSort", "SearchAndSort\SearchAndSort.csproj", "{8A508598-0021-4D95-AE1B-B7E78EE78AA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreesAndGraphs", "TreesAndGraphs\TreesAndGraphs.csproj", "{43B16956-18E4-4896-822E-78518750EA7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,22 @@ Global
 		{C72E9134-516C-4E8E-8A0F-C263336255FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C72E9134-516C-4E8E-8A0F-C263336255FC}.Release|x86.ActiveCfg = Release|Any CPU
 		{C72E9134-516C-4E8E-8A0F-C263336255FC}.Release|x86.Build.0 = Release|Any CPU
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Debug|Any CPU.Build.0 = Debug|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Debug|x86.ActiveCfg = Debug|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Debug|x86.Build.0 = Debug|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Release|Any CPU.ActiveCfg = Release|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Release|Any CPU.Build.0 = Release|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Release|x86.ActiveCfg = Release|x86
+		{8A508598-0021-4D95-AE1B-B7E78EE78AA8}.Release|x86.Build.0 = Release|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Debug|Any CPU.Build.0 = Debug|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Debug|x86.ActiveCfg = Debug|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Debug|x86.Build.0 = Debug|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Release|Any CPU.ActiveCfg = Release|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Release|Any CPU.Build.0 = Release|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Release|x86.ActiveCfg = Release|x86
+		{43B16956-18E4-4896-822E-78518750EA7F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
