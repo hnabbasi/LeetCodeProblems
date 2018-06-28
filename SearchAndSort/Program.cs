@@ -3,13 +3,21 @@ using System.Diagnostics;
 
 namespace SearchAndSort
 {
+    class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int data) { val = data; }
+    }
     class MainClass
     {
         static Stopwatch _sw;
         public static void Main(string[] args)
         {
             _sw = new Stopwatch();
-            BinarySearchProblem();
+            //BinarySearchProblem();
+            ValidateBSTProblem();
         }
 
         static void BinarySearchProblem() {

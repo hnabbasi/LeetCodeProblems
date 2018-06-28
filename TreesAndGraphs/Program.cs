@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace TreesAndGraphs
 {
     class TreeNode {
-        public int Data;
-        public TreeNode Left;
-        public TreeNode Right;
-        public TreeNode(int data) { Data = data; }
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int data) { val = data; }
     }
 
     class MainClass
@@ -15,7 +17,9 @@ namespace TreesAndGraphs
         public static void Main(string[] args)
         {
             //FindLaddersProblem();
-            InvertTreeProblem();
+            //InvertTreeProblem();
+            //ValidateBSTProblem();
+            ClosestPathProblem();
         }
 
         #region Invert Tree
@@ -23,15 +27,15 @@ namespace TreesAndGraphs
         {
             var tree = new TreeNode(4)
             {
-                Left = new TreeNode(2)
+                left = new TreeNode(2)
                 {
-                    Left = new TreeNode(1),
-                    Right = new TreeNode(3)
+                    left = new TreeNode(1),
+                    right = new TreeNode(3)
                 },
-                Right = new TreeNode(7)
+                right = new TreeNode(7)
                 {
-                    Left = new TreeNode(6),
-                    Right = new TreeNode(9)
+                    left = new TreeNode(6),
+                    right = new TreeNode(9)
                 }
             };
 
@@ -44,11 +48,11 @@ namespace TreesAndGraphs
             if (root == null)
                 return null;
 
-            var right = InvertTree(root.Right);
-            var left = InvertTree(root.Left);
+            var right = InvertTree(root.right);
+            var left = InvertTree(root.left);
 
-            root.Left = right;
-            root.Right = left;
+            root.left = right;
+            root.right = left;
             return root;
         }
 
@@ -56,9 +60,9 @@ namespace TreesAndGraphs
             if (tree == null) 
                 return;
             
-            Console.Write($"{tree.Data} ");
-            PrintTree(tree.Left);
-            PrintTree(tree.Right);
+            Console.Write($"{tree.val} ");
+            PrintTree(tree.left);
+            PrintTree(tree.right);
         }
         #endregion
 
@@ -107,5 +111,78 @@ namespace TreesAndGraphs
         }
         #endregion
 
+        #region Validate BST
+
+        static void ValidateBSTProblem()
+        {
+            var tree = new TreeNode(2) { left = new TreeNode(1), right = new TreeNode(3) };
+            var tree2 = new TreeNode(5) {
+                left = new TreeNode(1),
+                right = new TreeNode(4)
+                {
+                    left = new TreeNode(3),
+                    right = new TreeNode(6)
+                }
+            };
+
+            Console.WriteLine($"2->1->3 Is valid: {IsValidBST(tree)}");
+            Console.WriteLine($"5->1->4->3->6 Is valid: {IsValidBST(tree2)}");
+            Console.Read();
+        }
+
+        static bool IsValidBST(TreeNode root)
+        {
+            return IsValidBSTInner(root, null, null);
+        }
+
+        static bool IsValidBSTInner(TreeNode root, int? least, int? most)
+        {
+            if (root == null)
+                return true;
+
+            if (least.HasValue && root.val < least || most.HasValue && root.val > most)
+                return false;
+            
+            return IsValidBSTInner(root.left, least, root.val) && IsValidBSTInner(root.right, root.val, most);
+        }
+        #endregion
+
+        #region Shortest Path
+        static void ClosestPathProblem()
+        {
+            var tree = new TreeNode(4)
+            {
+                left = new TreeNode(2)
+                {
+                    left = new TreeNode(1),
+                    right = new TreeNode(3)
+                },
+                right = new TreeNode(5)
+            };
+
+            Console.WriteLine($"Result: {ClosestPath(tree, 3.714286)}");
+            Console.ReadKey();
+        }
+        static int ClosestPath(TreeNode root, double target)
+        {
+            var retVal = root.val;
+
+            if (root.val == target)
+            {
+                return retVal;
+            }
+
+            while (root != null)
+            {
+                if (Math.Abs(target - root.val) < Math.Abs(target - retVal))
+                {
+                    retVal = root.val;
+                }
+
+                root = root.val > target ? root.left : root.right;
+            }
+            return retVal;
+        }
+        #endregion
     }
 }
