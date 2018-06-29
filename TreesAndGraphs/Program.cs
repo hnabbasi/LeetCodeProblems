@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
 namespace TreesAndGraphs
 {
-    class TreeNode {
+    class TreeNode
+    {
         public int val;
         public TreeNode left;
         public TreeNode right;
@@ -19,7 +21,8 @@ namespace TreesAndGraphs
             //FindLaddersProblem();
             //InvertTreeProblem();
             //ValidateBSTProblem();
-            ClosestPathProblem();
+            //ClosestPathProblem();
+            VerticalOrderProblem();
         }
 
         #region Invert Tree
@@ -44,7 +47,8 @@ namespace TreesAndGraphs
             PrintTree(InvertTree(tree));
         }
 
-        static TreeNode InvertTree(TreeNode root) {
+        static TreeNode InvertTree(TreeNode root)
+        {
             if (root == null)
                 return null;
 
@@ -56,10 +60,11 @@ namespace TreesAndGraphs
             return root;
         }
 
-        static void PrintTree(TreeNode tree) {
-            if (tree == null) 
+        static void PrintTree(TreeNode tree)
+        {
+            if (tree == null)
                 return;
-            
+
             Console.Write($"{tree.val} ");
             PrintTree(tree.left);
             PrintTree(tree.right);
@@ -67,7 +72,8 @@ namespace TreesAndGraphs
         #endregion
 
         #region Find Ladders
-        static void FindLaddersProblem() {
+        static void FindLaddersProblem()
+        {
             var input = new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" };
             Console.WriteLine($"Result:");
 
@@ -83,14 +89,15 @@ namespace TreesAndGraphs
             }
         }
 
-        static IList<IList<string>> FindLadders(string beginWord, string endWord, IList<string> wordList) {
+        static IList<IList<string>> FindLadders(string beginWord, string endWord, IList<string> wordList)
+        {
 
             // Remove beginWord if exists
-            if(wordList.Contains(beginWord))
+            if (wordList.Contains(beginWord))
                 wordList.Remove(beginWord);
 
             // Add endWord if doesn't exist
-            if(!wordList.Contains(endWord))
+            if (!wordList.Contains(endWord))
                 wordList.Add(endWord);
 
             // Initialize ladder with beginWord as key
@@ -116,7 +123,8 @@ namespace TreesAndGraphs
         static void ValidateBSTProblem()
         {
             var tree = new TreeNode(2) { left = new TreeNode(1), right = new TreeNode(3) };
-            var tree2 = new TreeNode(5) {
+            var tree2 = new TreeNode(5)
+            {
                 left = new TreeNode(1),
                 right = new TreeNode(4)
                 {
@@ -142,7 +150,7 @@ namespace TreesAndGraphs
 
             if (least.HasValue && root.val < least || most.HasValue && root.val > most)
                 return false;
-            
+
             return IsValidBSTInner(root.left, least, root.val) && IsValidBSTInner(root.right, root.val, most);
         }
         #endregion
@@ -171,7 +179,6 @@ namespace TreesAndGraphs
             {
                 return retVal;
             }
-
             while (root != null)
             {
                 if (Math.Abs(target - root.val) < Math.Abs(target - retVal))
@@ -181,6 +188,81 @@ namespace TreesAndGraphs
 
                 root = root.val > target ? root.left : root.right;
             }
+            return retVal;
+        }
+        #endregion
+
+        #region DFS Vertical Level Traversal
+        static void VerticalOrderProblem()
+        {
+            var tree = new TreeNode(3)
+            {
+                left = new TreeNode(9),
+                right = new TreeNode(20)
+                {
+                    left = new TreeNode(15),
+                    right = new TreeNode(7)
+                }
+            };
+            var output = VerticalOrder(tree);
+            Debug.WriteLine("Result:");
+            foreach (var item in output)
+            {
+                foreach (var item2 in item)
+                {
+                    Debug.Write($"{item2} ");
+                }
+                Debug.WriteLine("");
+            }
+        }
+        static IList<IList<int>> VerticalOrder(TreeNode root)
+        {
+            var retVal = new List<IList<int>>();
+
+            if (root == null)
+                return retVal;
+
+            var nodeQueue = new Queue<TreeNode>();
+            var orderQueue = new Queue<int>();
+            var dict = new Dictionary<int, List<int>>();
+            var hDistLeft = 0;
+            var hDistRight = 0;
+
+            //1. enqu
+            nodeQueue.Enqueue(root);
+            orderQueue.Enqueue(hDistLeft);
+
+            //2. deq
+            while (nodeQueue.Any())
+            {
+                var currentOrder = orderQueue.Dequeue();
+                var node = nodeQueue.Dequeue();
+                List<int> currentList;
+
+                if (!dict.TryGetValue(currentOrder, out currentList))
+                    currentList = new List<int>();
+
+                currentList.Add(node.val);
+                dict[currentOrder] = currentList;
+
+                if(node.left != null) {
+                    hDistLeft = Math.Min(hDistLeft, currentOrder - 1);
+                    nodeQueue.Enqueue(node.left);
+                    orderQueue.Enqueue(currentOrder - 1);
+                }
+
+                if(node.right != null) {
+                    hDistRight = Math.Max(hDistRight, currentOrder + 1);
+                    nodeQueue.Enqueue(node.right);
+                    orderQueue.Enqueue(currentOrder + 1);
+                }
+            }
+
+            for (int i = hDistLeft; i <= hDistRight; i++)
+            {
+                retVal.Add(dict[i]);
+            }
+
             return retVal;
         }
         #endregion
