@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace TreesAndGraphs
 {
@@ -22,8 +23,67 @@ namespace TreesAndGraphs
             //InvertTreeProblem();
             //ValidateBSTProblem();
             //ClosestPathProblem();
-            VerticalOrderProblem();
+            //VerticalOrderProblem();
+            MissingPercentageProblem();
         }
+
+        private static void MissingPercentageProblem()
+        {
+            var input = new int[10] { 0, 9, 6, 8, 5, 45, 87, 54, 44, 23 };
+            Console.WriteLine($"Missing: {ReturnMissingRanges(input)}");
+        }
+
+        #region Percent Missing
+        // We have a large list of percentages as integers (from 0 to 100). Want a function that describes the missing numbers in the list.
+        // The report should be of the form "1-4,9,18-43,95" if the missing numbers were 1, 2, 3, 4, 9, 18, 19, 20, etc. The function should return
+        // the description as a string.
+
+        static string ReturnMissingRanges(int[] percents)
+        {
+            if (percents.Length == 0)
+                return string.Empty;
+
+            var retVal = string.Empty;
+            Array.Sort(percents);
+            var missingQueue = new Queue<int>();
+
+            for (int i = 0; i <= 100; i++)
+            {
+                if (!percents.Contains(i))
+                    missingQueue.Enqueue(i);
+            }
+            var retString = new StringBuilder();
+            var first = -1;
+            var last = -1;
+
+            first = missingQueue.Dequeue();
+            last = first;
+            while (missingQueue.Count > 0)
+            {
+                if (last + 1 == missingQueue.Peek())
+                {
+                    last = missingQueue.Dequeue();
+                    continue;
+                }
+
+                if (last == first)
+                {
+                    retString.Append(first);
+                }
+                else
+                {
+                    retString.Append($"{first}-{last}");
+                }
+                retString.Append(",");
+
+                first = missingQueue.Dequeue();
+                last = first;
+            }
+            retString.Append($"{first}-{last}");
+
+            return retString.ToString();
+        }
+        #endregion
 
         #region Invert Tree
         private static void InvertTreeProblem()
